@@ -18,30 +18,41 @@
 			</plugin>
 		</plugins>
 	</build>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.5.1.RELEASE</version>
+	</parent>
+
 	<properties>
-        <javaVersion>1.8</javaVersion>
-    </properties>
-    <!-- 使用dependencyManagement进行版本管理 -->
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>Camden.SR6</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
+		<javaVersion>1.8</javaVersion>
+	</properties>
 
-    </dependencyManagement>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>Camden.SR6</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
 
-    <dependencies>
-       <!-- 引入config server依赖 -->
-        <dependency>
+	</dependencyManagement>
+
+	<dependencies>
+		<!-- 引入eureka 客户端依赖 -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-eureka</artifactId>
+		</dependency>
+		 <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-config-server</artifactId>
         </dependency>
+		
 
-    </dependencies>
+	</dependencies>
 
 </project>
