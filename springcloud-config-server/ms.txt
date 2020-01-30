@@ -1,1 +1,0 @@
-测试springcloud-config-server配置中心服务项目
