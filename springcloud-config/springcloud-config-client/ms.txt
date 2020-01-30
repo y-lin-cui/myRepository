@@ -1,0 +1,1 @@
+测试springcloud-config-client项目功能
