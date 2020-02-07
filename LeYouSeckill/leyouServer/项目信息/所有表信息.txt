@@ -1,0 +1,12 @@
+	---------- tb_sku(商品列表) ----------
+	id						--主键
+	spu_id					--商品ID
+	title					--商品标题
+	images					--商品的图片，多个图片以‘,’分割
+	stock					--库存数量
+	price					--销售价格，单位为分
+	indexes					--特有规格属性在商品属性模板中的对应下标组合
+	own_spec				--商品的特有规格参数键值对，json格式，反序列化时请使用linkedHashMap，保证有序
+	enable					--是否有效，0无效，1有效	默认为1
+	create_time				--添加时间
+	update_time				--最后的修改时间
