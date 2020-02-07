@@ -37,5 +37,6 @@ public class StockDaoImpl implements IStockDao{
         //3、返回信息
         return list;
 	}
-
+	
+	
 }
