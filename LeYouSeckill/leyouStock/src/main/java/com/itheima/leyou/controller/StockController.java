@@ -29,7 +29,11 @@ public class StockController {
         return iStockService.getStockList();
     }
     
-  
+    //获取某商品详情
+    @RequestMapping(value = "/getStock/{sku_id}")
+    public Map<String, Object> getStock(@PathVariable("sku_id") String sku_id){
+        return iStockService.getStock(sku_id);
+    }
 
    
 

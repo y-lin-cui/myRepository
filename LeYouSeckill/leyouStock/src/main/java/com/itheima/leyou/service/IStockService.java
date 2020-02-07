@@ -16,9 +16,14 @@ public interface IStockService {
 	 * @return Map，包含list，包含一个商品的map
 	 */
 	public Map<String, Object> getStockList();
+	
+	/**
+	 * @Describe: 获取商品详细信息
+	 * @author LIN
+	 * @date 2020-02-08 03:34:38
+	 */
+	public Map<String, Object> getStock(String sku_id);
 
-//	public Map<String, Object> getStock(String sku_id);
-//
 //	public Map<String, Object> insertLimitPolicy(Map<String, Object> policyInfo);
 
 }

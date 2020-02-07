@@ -35,6 +35,11 @@ public class StockServiceImpl implements IStockService {
 	@Autowired
 	private RestTemplate restTemplate;
 	
+	/**
+	 * 获取商品列表，主要为了展示商品列表页
+	 * 
+	 * @return list，包含一个商品的map
+	 */
 	public Map<String, Object> getStockList() {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 
@@ -48,15 +53,55 @@ public class StockServiceImpl implements IStockService {
 			return resultMap;
 		}
 
-		// 3、取redis取政策
+		// 3、从redis中获取秒杀政策，（如秒杀政策已过期，redis会自动清除）
 		resultMap = getLimitPolicy(list);
 
-		// 4、返回正常信息
+		// 4、返回信息
 		resultMap.put("sku_list", list);
 
 		return resultMap;
 	}
+	
+	/**
+	 * @Describe: 获取商品详细信息
+	 * @author LIN
+	 * @date 2020-02-08 03:34:38
+	 */
+	public Map<String, Object> getStock(String sku_id){
+        Map<String, Object> resultMap = new HashMap<String, Object>();
 
+        //1、判断前端传入的数据
+        if (sku_id==null||sku_id.equals("")){
+            resultMap.put("result", false);
+            resultMap.put("msg", "前端传过来的什么东东？");
+            return resultMap;
+        }
+
+        //2、取stockDao的方法
+        ArrayList<Map<String, Object>> list = iStockDao.getStock(sku_id);
+
+        //3、判断如果没取出来
+        if (list==null||list.size()==0){
+            resultMap.put("result", false);
+            resultMap.put("msg", "数据库咋还没取出来！");
+            return resultMap;
+        }
+
+        //3、取redis取政策
+        resultMap = getLimitPolicy(list);
+
+        //4、返回正常信息
+        resultMap.put("sku", list);
+
+        return resultMap;
+    }
+
+	
+	/**  
+	 * @Describe: 为商品遍历秒杀政策
+	 * @author LIN
+	 * @date 2020-02-08 03:28:14 
+	 */
 	private Map<String, Object> getLimitPolicy(ArrayList<Map<String, Object>> list) {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 

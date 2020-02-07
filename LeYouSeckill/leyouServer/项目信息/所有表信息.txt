@@ -1,4 +1,4 @@
-	---------- tb_sku(商品列表) ----------
+-------------- tb_sku(商品列表) --------------
 	id						--主键
 	spu_id					--商品ID
 	title					--商品标题
@@ -8,5 +8,16 @@
 	indexes					--特有规格属性在商品属性模板中的对应下标组合
 	own_spec				--商品的特有规格参数键值对，json格式，反序列化时请使用linkedHashMap，保证有序
 	enable					--是否有效，0无效，1有效	默认为1
-	create_time				--添加时间
-	update_time				--最后的修改时间
+	create_time				--创建时间
+	update_time				--更新时间
+	
+-------------- tb_spu_detail(商品明细表) --------------
+	spu_id					--商品ID
+	description				--商品描述信息
+	generic_spec			--通用规格参数数据
+	special_spec			--特有规格参数及可选值信息，json格式
+	packing_list			--包装清单
+	after_service			--售后服务
+	create_time				--创建时间
+	update_time				--更新时间
+	
