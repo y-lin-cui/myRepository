@@ -23,7 +23,12 @@ public interface IStockService {
 	 * @date 2020-02-08 03:34:38
 	 */
 	public Map<String, Object> getStock(String sku_id);
-
-//	public Map<String, Object> insertLimitPolicy(Map<String, Object> policyInfo);
+	
+	/**  
+	 * @Describe: 新增秒杀政策，并写入缓存
+	 * @author LIN
+	 * @date 2020-02-08 09:41:17 
+	 */
+	public Map<String, Object> insertLimitPolicy(Map<String, Object> policyInfo);
 
 }

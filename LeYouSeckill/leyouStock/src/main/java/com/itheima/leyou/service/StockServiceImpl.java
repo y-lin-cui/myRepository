@@ -7,6 +7,7 @@ import net.bytebuddy.implementation.bytecode.assign.TypeCasting;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.text.ParseException;
@@ -139,4 +140,74 @@ public class StockServiceImpl implements IStockService {
 		resultMap.put("msg", "");
 		return resultMap;
 	}
+	
+	/**  
+	 * @Describe: 新增秒杀政策，并写入缓存
+	 * @author LIN
+	 * @date 2020-02-08 09:41:17 
+	 */
+	@Transactional
+	 public Map<String, Object> insertLimitPolicy(Map<String, Object> policyInfo){
+	        Map<String, Object> resultMap = new HashMap<String, Object>();
+
+	        //1、判断传入的参数
+	        if (policyInfo==null||policyInfo.isEmpty()){
+	            resultMap.put("result", false);
+	            resultMap.put("msg", "前端传过来的什么东东？");
+	            return resultMap;
+	        }
+
+	        //2、取stockdao的方法，新增政策
+	        boolean result = iStockDao.insertLimitPolicy(policyInfo);
+
+	        if (!result){
+	            resultMap.put("result", false);
+	            resultMap.put("msg", "数据库咋还写失败了！");
+	            return resultMap;
+	        }
+
+	        //3、写入redis
+	        long diff = 0;
+	        //3.1、写入政策，key: LIMIT_POLICY_{sku_id}， value: policyInfo， 有效期：结束时间-当前时间
+
+	        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+	        String now = restTemplate.getForObject("http://leyou-time-server/getTime", String.class);
+
+	        try {
+	            Date end_time = simpleDateFormat.parse(policyInfo.get("end_time").toString());
+	            Date now_time = simpleDateFormat.parse(now);
+
+	            diff = (end_time.getTime()-now_time.getTime())/1000;
+
+	            if (diff<0){
+	                resultMap.put("result", false);
+	                resultMap.put("msg", "结束时间不能小于当前时间！");
+	                return resultMap;
+	            }
+	        } catch (ParseException e) {
+	            e.printStackTrace();
+	        }
+
+	        String policy = JSON.toJSONString(policyInfo);
+	        stringRedisTemplate.opsForValue().set("LIMIT_POLICY_"+policyInfo.get("sku_id").toString(), policy, diff, TimeUnit.SECONDS);
+
+	        //3.2、获取商品的政策
+	        ArrayList<Map<String, Object>> list = iStockDao.getStock(policyInfo.get("sku_id").toString());
+	        String sku = JSON.toJSONString(list.get(0));
+	        
+	        //3.3、存入Redis
+	        /**  
+			 * opsForValue().set(K key, V value, long timeout, TimeUnit unit)：
+			 * key ：字段key
+			 * value：key对应的值
+		     * timeout：超时时间
+		     * TimeUnit：超时时间单位
+			 */
+	        stringRedisTemplate.opsForValue().set("SKU_"+policyInfo.get("sku_id").toString(), sku, diff, TimeUnit.SECONDS);
+
+	        //4、返回正常信息
+	        resultMap.put("result", true);
+	        resultMap.put("msg", "");
+	        return resultMap;
+	    }
 }

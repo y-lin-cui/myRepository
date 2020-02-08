@@ -24,7 +24,12 @@ public interface IStockDao {
 	 * @date 2020-02-08 03:34:38
 	 */
 	public ArrayList<Map<String, Object>> getStock(String sku_id);
-
-//	public boolean insertLimitPolicy(Map<String, Object> policyInfo);
+	
+	/**  
+	 * @Describe: 新增秒杀政策，并写入缓存
+	 * @author LIN
+	 * @date 2020-02-08 09:41:17 
+	 */
+	public boolean insertLimitPolicy(Map<String, Object> policyInfo);
 	
 }

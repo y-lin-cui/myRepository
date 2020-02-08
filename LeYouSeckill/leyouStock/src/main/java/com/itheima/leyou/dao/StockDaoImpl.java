@@ -61,5 +61,22 @@ public class StockDaoImpl implements IStockDao {
 		// 3、返回信息
 		return list;
 	}
+	
+	/**  
+	 * @Describe: 新增秒杀政策，并写入缓存
+	 * @author LIN
+	 * @date 2020-02-08 09:41:17 
+	 */
+	public boolean insertLimitPolicy(Map<String, Object> policyInfo){
+		 //1、创建语句
+        String sql = "insert into tb_limit_policy (sku_id, quanty, price, begin_time, end_time) " +
+                "Values (?, ?, ?, ?, ?)";
+        //2、执行
+        boolean result = jdbcTemplate.update(sql, policyInfo.get("sku_id"), policyInfo.get("quanty"),
+                policyInfo.get("price"), policyInfo.get("begin_time"), policyInfo.get("end_time"))==1;
+
+        //3、返回
+        return result;
+	}
 
 }

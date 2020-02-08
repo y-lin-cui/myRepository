@@ -35,7 +35,12 @@ public class StockController {
         return iStockService.getStock(sku_id);
     }
 
-   
+    //新增商品秒杀政策
+    @RequestMapping(value = "/insertLimitPolicy/{json}")
+    public Map<String, Object> insertLimitPolicy(@PathVariable("json") String json){
+        Map<String, Object> policyInfo = JSONObject.parseObject(json, Map.class);
+        return iStockService.insertLimitPolicy(policyInfo);
+    }
 
 	
 }

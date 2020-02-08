@@ -1,4 +1,4 @@
--------------- tb_sku(商品列表) --------------
+-------------- tb_sku(商品列表-每款商品会有不同的颜色，款式，均占一条数据) --------------
 	id						--主键
 	spu_id					--商品ID
 	title					--商品标题
@@ -11,6 +11,7 @@
 	create_time				--创建时间
 	update_time				--更新时间
 	
+
 -------------- tb_spu_detail(商品明细表) --------------
 	spu_id					--商品ID
 	description				--商品描述信息
@@ -20,4 +21,15 @@
 	after_service			--售后服务
 	create_time				--创建时间
 	update_time				--更新时间
+	
+
+-------------- tb_limit_policy(秒杀政策表) --------------
+	id						--主键
+	sku_id					--商品列表ID
+	quanty					--数量
+	price					--价格
+	begin_time				--开始时间
+	end_time				--结束时间
+	
+
 	
