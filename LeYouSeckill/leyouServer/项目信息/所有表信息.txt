@@ -32,4 +32,24 @@
 	end_time				--结束时间
 	
 
+-------------- tb_warehouse(库房表) --------------
+id							--库房ID
+name						--库房名称
+create_time					--创建时间
+update_time					--更新时间
+
+
+-------------- tb_stock_storage(库存主表) --------------
+id							--主键
+warehouse_id				--库存主表ID
+sku_id						--商品列表ID
+quanty						--剩余数量
+
+
+-------------- tb_stock_storage_history(库存历史表) --------------
+id							--主键
+stock_storage_id			--库存主表ID
+in_quanty					--入库数量
+out_quanty					--出库数量
+
 	
