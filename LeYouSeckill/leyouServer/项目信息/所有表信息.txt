@@ -52,4 +52,12 @@ stock_storage_id			--库存主表ID
 in_quanty					--入库数量
 out_quanty					--出库数量
 
+
+-------------- tb_user(会员表) -------------- 
+id							--用户ID
+username					--用户名
+password					--密码
+phone						--电话
+create_time					--创建时间
+update_time					--更新时间
 	
