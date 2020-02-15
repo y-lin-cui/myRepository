@@ -28,7 +28,7 @@ public class TestRedis {
 
 	public static void main(String[] args) {
 		ShardedJedis jedis = pool.getResource();
-		jedis.set("name", "呵呵");
+//		jedis.set("name", "呵呵");
 		String name = jedis.get("name");
 		System.out.println("name的值：" + name);
 	}
