@@ -56,6 +56,8 @@ public class OrderServiceImpl implements IOrderService {
 		String order_id = String.valueOf(System.currentTimeMillis());
 
 		// 2、从redis取政策
+		String key = "LIMIT_POLICY_" + sku_id;
+		System.out.println("Redis中获取到的LIMIT_POLICY-key:"+key);
 		String policy = stringRedisTemplate.opsForValue().get("LIMIT_POLICY_" + sku_id);
 
 		if (policy != null && !policy.equals("")) {

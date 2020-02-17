@@ -24,6 +24,8 @@ public class OrderController {
 //        HttpSession httpSession = httpServletRequest.getSession();
 //        Object o = httpSession.getAttribute("user");
 //        Map<String, Object> userMap = JSONObject.parseObject(o.toString(), Map.class);
+    	Map<String, String> sku = JSONObject.parseObject(sku_id, Map.class);
+    	sku_id= sku.get("sku_id");
         return iOrderService.createOrder(sku_id, "31"); //userMap.get("user_id").toString()
     }
 
