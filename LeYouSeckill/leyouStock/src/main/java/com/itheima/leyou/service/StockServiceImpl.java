@@ -191,7 +191,7 @@ public class StockServiceImpl implements IStockService {
 	        String policy = JSON.toJSONString(policyInfo);
 	        stringRedisTemplate.opsForValue().set("LIMIT_POLICY_"+policyInfo.get("sku_id").toString(), policy, diff, TimeUnit.SECONDS);
 
-	        //3.2、获取商品的政策
+	        //3.2、获取商品详细信息
 	        ArrayList<Map<String, Object>> list = iStockDao.getStock(policyInfo.get("sku_id").toString());
 	        String sku = JSON.toJSONString(list.get(0));
 	        
